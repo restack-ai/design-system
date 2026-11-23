@@ -1,0 +1,61 @@
+/* Base — applied by every component through the .restack-* class namespace.
+ * No global element resets: the library must be safe to drop into a host app.
+ */
+
+[class^='restack-'],
+[class*=' restack-'] {
+  box-sizing: border-box;
+}
+
+/* The themed root. ThemeProvider renders it; anything carrying
+ * data-restack-theme gets the same ground, so a face switch repaints the
+ * region it scopes rather than only the components inside it. */
+.restack-root,
+[data-restack-theme] {
+  font-family: var(--restack-font-family-sans);
+  font-size: var(--restack-font-size-body);
+  line-height: var(--restack-line-height-normal);
+  color: var(--restack-color-text);
+  background: var(--restack-color-canvas);
+  color-scheme: var(--restack-color-scheme);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.restack-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.restack-focusable:focus-visible {
+  outline: var(--restack-focus-outline);
+  outline-offset: var(--restack-focus-offset);
+}
+
+/* One pulse for every live dot in the system. */
+@keyframes restack-pulse {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 55%, transparent); }
+  70% { box-shadow: 0 0 0 0.45em color-mix(in srgb, currentColor 0%, transparent); }
+  100% { box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 0%, transparent); }
+}
+
+@keyframes restack-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* --- Icon --- */
+.restack-icon {
+  display: inline-block;
+  flex: none;
+  width: 1.15em;
+  height: 1.15em;
+  vertical-align: -0.2em;
+}

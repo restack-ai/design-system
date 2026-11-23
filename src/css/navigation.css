@@ -1,0 +1,430 @@
+/* Navigation — Tabs, Breadcrumb, Pagination, Stepper */
+
+.restack-tabs {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--restack-font-family-sans);
+  color: var(--restack-color-text);
+}
+.restack-tabs__list {
+  display: flex;
+  align-items: stretch;
+  gap: var(--restack-space-1);
+  overflow-x: auto;
+}
+.restack-tabs__list--full .restack-tabs__tab { flex: 1 1 0; justify-content: center; }
+.restack-tabs__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--restack-space-2);
+  border: 0;
+  background: transparent;
+  font-family: inherit;
+  font-weight: var(--restack-font-weight-medium);
+  color: var(--restack-color-text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    color var(--restack-duration-fast) var(--restack-easing-standard),
+    background-color var(--restack-duration-fast) var(--restack-easing-standard),
+    box-shadow var(--restack-duration-fast) var(--restack-easing-standard);
+}
+.restack-tabs__tab:hover:not(:disabled) { color: var(--restack-color-text-strong); }
+.restack-tabs__tab:disabled { opacity: 0.35; cursor: not-allowed; }
+.restack-tabs__tab:focus-visible { outline: var(--restack-focus-outline); outline-offset: calc(var(--restack-focus-offset) * -1); }
+.restack-tabs__tab--active { color: var(--restack-color-text-strong); }
+.restack-tabs--sm .restack-tabs__tab { height: var(--restack-size-control-sm); padding-inline: var(--restack-space-3); font-size: var(--restack-font-size-caption); }
+.restack-tabs--md .restack-tabs__tab { height: var(--restack-size-control-md); padding-inline: var(--restack-space-4); font-size: var(--restack-font-size-small); }
+
+/* The slot itself is bare — it only aligns whatever the caller passed. The
+ * pill lives on --count, which Tabs adds only for a plain string or number; a
+ * caller's own <Badge> would otherwise be drawn as a pill inside a pill. */
+.restack-tabs__badge {
+  display: inline-flex;
+  align-items: center;
+}
+.restack-tabs__badge--count {
+  justify-content: center;
+  min-width: 1.5em;
+  padding: 0.15em 0.4em;
+  border: var(--restack-border-width) solid var(--restack-color-border);
+  border-radius: var(--restack-radius-sm);
+  color: var(--restack-color-text-muted);
+  font-family: var(--restack-font-family-mono);
+  font-size: 0.8em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.restack-tabs__tab--active .restack-tabs__badge--count {
+  border-color: var(--restack-color-primary-subtle);
+  color: var(--restack-color-primary-strong);
+}
+
+/* underline — the active tab is ruled with the 2px lime selection line. */
+.restack-tabs--underline .restack-tabs__list {
+  border-bottom: var(--restack-border-width) solid var(--restack-color-border-subtle);
+  gap: var(--restack-space-5);
+}
+.restack-tabs--underline .restack-tabs__tab {
+  padding-inline: 0;
+  box-shadow: inset 0 calc(var(--restack-rule-width) * -1) 0 transparent;
+}
+.restack-tabs--underline .restack-tabs__tab--active {
+  box-shadow: inset 0 calc(var(--restack-rule-width) * -1) 0 var(--restack-color-primary-strong);
+}
+
+/* segmented — parallel-training-lab's strategy selector: one rounded shell,
+ * square segments divided by hairlines, the active one tinted lime and
+ * underlined with the selection line from inside. */
+.restack-tabs--segmented .restack-tabs__list {
+  gap: 0;
+  border: var(--restack-border-width) solid var(--restack-color-border-strong);
+  border-radius: var(--restack-radius-md);
+  background: var(--restack-color-surface-sunken);
+  overflow: hidden;
+  align-self: flex-start;
+}
+.restack-tabs--segmented .restack-tabs__list--full { align-self: stretch; }
+.restack-tabs--segmented .restack-tabs__tab {
+  border-radius: 0;
+  justify-content: center;
+}
+.restack-tabs--segmented .restack-tabs__tab + .restack-tabs__tab {
+  border-left: var(--restack-border-width) solid var(--restack-color-border);
+}
+.restack-tabs--segmented .restack-tabs__tab:hover:not(:disabled):not(.restack-tabs__tab--active) {
+  background: var(--restack-color-surface-hover);
+}
+.restack-tabs--segmented .restack-tabs__tab--active {
+  background: var(--restack-color-primary-surface);
+  color: var(--restack-color-primary-strong);
+  box-shadow: inset 0 calc(var(--restack-rule-width) * -1) 0 var(--restack-color-primary-strong);
+}
+
+.restack-tabs__panel { padding-top: var(--restack-space-4); }
+
+/* --- Breadcrumb --- */
+.restack-breadcrumb {
+  font-family: var(--restack-font-family-sans);
+  font-size: var(--restack-font-size-caption);
+}
+.restack-breadcrumb__list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--restack-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.restack-breadcrumb__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--restack-space-2);
+}
+.restack-breadcrumb__link {
+  color: var(--restack-color-text-muted);
+  text-decoration: none;
+  cursor: pointer;
+}
+.restack-breadcrumb__link:hover { color: var(--restack-color-text-strong); }
+.restack-breadcrumb__link:focus-visible {
+  outline: var(--restack-focus-outline);
+  outline-offset: var(--restack-focus-offset);
+  border-radius: var(--restack-radius-xs);
+}
+.restack-breadcrumb__current {
+  font-weight: var(--restack-font-weight-medium);
+  color: var(--restack-color-text);
+}
+.restack-breadcrumb__separator {
+  display: inline-flex;
+  color: var(--restack-color-text-subtle);
+  line-height: 0;
+}
+.restack-breadcrumb__separator svg { width: 0.85em; height: 0.85em; }
+
+/* --- Pagination --- */
+.restack-pagination {
+  display: flex;
+  align-items: center;
+  gap: var(--restack-space-1);
+  font-family: var(--restack-font-family-sans);
+  color: var(--restack-color-text);
+}
+.restack-pagination__page,
+.restack-pagination__step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--restack-border-width) solid var(--restack-color-border-strong);
+  border-radius: var(--restack-radius-md);
+  background: var(--restack-color-surface-raised);
+  color: var(--restack-color-text);
+  font-family: var(--restack-font-family-mono);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition:
+    background-color var(--restack-duration-fast) var(--restack-easing-standard),
+    border-color var(--restack-duration-fast) var(--restack-easing-standard);
+}
+.restack-pagination--sm .restack-pagination__page,
+.restack-pagination--sm .restack-pagination__step {
+  min-width: var(--restack-size-control-sm);
+  height: var(--restack-size-control-sm);
+  font-size: var(--restack-font-size-caption);
+}
+.restack-pagination--md .restack-pagination__page,
+.restack-pagination--md .restack-pagination__step {
+  min-width: var(--restack-size-control-md);
+  height: var(--restack-size-control-md);
+  font-size: var(--restack-font-size-small);
+}
+.restack-pagination__page:hover:not(.restack-pagination__page--active),
+.restack-pagination__step:hover:not(:disabled) {
+  background: var(--restack-color-surface-hover);
+}
+.restack-pagination__page:focus-visible,
+.restack-pagination__step:focus-visible { outline: var(--restack-focus-outline); outline-offset: var(--restack-focus-offset); }
+.restack-pagination__page--active {
+  background: var(--restack-color-primary-surface);
+  border-color: var(--restack-color-primary-strong);
+  color: var(--restack-color-primary-strong);
+  font-weight: var(--restack-font-weight-medium);
+  cursor: default;
+}
+.restack-pagination__step:disabled {
+  cursor: not-allowed;
+  opacity: 0.35;
+}
+.restack-pagination__step svg { width: 1em; height: 1em; }
+.restack-pagination__gap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  color: var(--restack-color-text-subtle);
+}
+.restack-pagination__summary {
+  margin-left: var(--restack-space-3);
+  font-family: var(--restack-font-family-mono);
+  font-size: var(--restack-font-size-caption);
+  color: var(--restack-color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Stepper ---
+ * The labs' phase row: a mono numeral in a ring, lime when done, an outline
+ * when current, a hairline connector between. */
+.restack-stepper {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--restack-font-family-sans);
+  color: var(--restack-color-text);
+  font-size: var(--restack-font-size-small);
+}
+.restack-stepper--horizontal { flex-direction: row; align-items: flex-start; }
+.restack-stepper--vertical { flex-direction: column; gap: var(--restack-space-5); }
+
+.restack-stepper__step {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--restack-space-3);
+  position: relative;
+}
+/* flex-basis auto, not 0: each step's base is its own content width, so the
+ * leftover is split evenly and every connector comes out the same length. */
+.restack-stepper--horizontal .restack-stepper__step { flex: 1 1 auto; padding-right: var(--restack-space-3); }
+.restack-stepper--horizontal .restack-stepper__step:last-child { flex: none; padding-right: 0; }
+
+.restack-stepper__marker {
+  flex: none;
+  width: 1.75rem;
+  height: 1.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--restack-radius-pill);
+  border: var(--restack-border-width) solid var(--restack-color-border-strong);
+  background: var(--restack-color-surface-sunken);
+  color: var(--restack-color-text-muted);
+  font-family: var(--restack-font-family-mono);
+  font-weight: var(--restack-font-weight-medium);
+  font-size: var(--restack-font-size-caption);
+  font-variant-numeric: tabular-nums;
+  z-index: 1;
+}
+.restack-stepper__marker svg { width: 0.9rem; height: 0.9rem; }
+.restack-stepper__dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: var(--restack-radius-pill);
+  background: currentColor;
+}
+
+.restack-stepper__step--complete .restack-stepper__marker {
+  background: var(--restack-color-primary-strong);
+  border-color: var(--restack-color-primary-strong);
+  color: var(--restack-color-on-primary-strong);
+}
+.restack-stepper__step--current .restack-stepper__marker {
+  background: var(--restack-color-primary-surface);
+  border-color: var(--restack-color-primary-strong);
+  color: var(--restack-color-primary-strong);
+}
+
+.restack-stepper__text { display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; padding-top: 0.2rem; }
+.restack-stepper__label { font-weight: var(--restack-font-weight-medium); color: var(--restack-color-text-muted); }
+.restack-stepper__step--current .restack-stepper__label { color: var(--restack-color-text-strong); }
+.restack-stepper__step--complete .restack-stepper__label { color: var(--restack-color-text); }
+.restack-stepper__description {
+  font-size: var(--restack-font-size-caption);
+  color: var(--restack-color-text-muted);
+}
+
+.restack-stepper__connector {
+  background: var(--restack-color-border);
+}
+/* The two orientations position this rule differently, and horizontal is the
+ * trap: a horizontal step is a row — marker, then label — so a connector
+ * absolutely positioned from the marker's right edge would be drawn straight
+ * through the label. It is a flex item instead, after the text, absorbing the
+ * width left before the next marker; margin-top centres it on the 1.75rem
+ * marker. Vertical has no such conflict, so the rule stays absolute there. */
+.restack-stepper--horizontal .restack-stepper__connector {
+  flex: 1 1 var(--restack-space-6);
+  min-width: var(--restack-space-5);
+  height: var(--restack-border-width);
+  margin-top: 0.84375rem;
+}
+.restack-stepper--vertical .restack-stepper__connector {
+  position: absolute;
+  top: 1.75rem;
+  bottom: calc(var(--restack-space-5) * -1);
+  left: 0.84375rem;
+  width: var(--restack-border-width);
+}
+.restack-stepper__step--complete .restack-stepper__connector { background: var(--restack-color-primary-strong); }
+
+/* --- Sidebar ---
+ * The console's persistent rail: the inset tone, one hairline on its inner
+ * edge, header at the top, footer pinned to the end. */
+.restack-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--restack-space-5);
+  width: 13.5rem;
+  flex: none;
+  min-height: 100%;
+  padding: var(--restack-space-4) var(--restack-space-3);
+  background: var(--restack-color-surface-sunken);
+  border-right: var(--restack-border-width) solid var(--restack-color-border-subtle);
+  font-family: var(--restack-font-family-sans);
+  color: var(--restack-color-text);
+}
+.restack-sidebar__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--restack-space-4);
+  padding-inline: var(--restack-space-2);
+}
+.restack-sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--restack-space-5);
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.restack-sidebar__footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--restack-space-2);
+  padding-inline: var(--restack-space-2);
+}
+
+.restack-navgroup { display: flex; flex-direction: column; gap: var(--restack-space-2); }
+.restack-navgroup__label {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--restack-space-2);
+  padding-inline: var(--restack-space-2);
+  font-size: var(--restack-font-size-micro);
+  font-weight: var(--restack-font-weight-semibold);
+  letter-spacing: var(--restack-letter-spacing-caps);
+  text-transform: uppercase;
+  color: var(--restack-color-text-muted);
+}
+.restack-navgroup__meta {
+  font-family: var(--restack-font-family-mono);
+  font-weight: var(--restack-font-weight-regular);
+  letter-spacing: var(--restack-letter-spacing-normal);
+  color: var(--restack-color-text-subtle);
+}
+.restack-navgroup__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--restack-space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* --- NavItem --- */
+.restack-navitem__row { display: block; }
+.restack-navitem {
+  display: flex;
+  align-items: center;
+  gap: var(--restack-space-3);
+  width: 100%;
+  padding: var(--restack-space-2);
+  border: var(--restack-border-width) solid transparent;
+  border-radius: var(--restack-radius-md);
+  background: transparent;
+  color: var(--restack-color-text-secondary);
+  font-family: var(--restack-font-family-sans);
+  font-size: var(--restack-font-size-small);
+  line-height: var(--restack-line-height-snug);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--restack-duration-fast) var(--restack-easing-standard),
+    color var(--restack-duration-fast) var(--restack-easing-standard),
+    border-color var(--restack-duration-fast) var(--restack-easing-standard);
+}
+.restack-navitem:hover:not(:disabled):not(.restack-navitem--active) {
+  background: var(--restack-color-surface-hover);
+  color: var(--restack-color-text-strong);
+}
+.restack-navitem:focus-visible { outline: var(--restack-focus-outline); outline-offset: calc(var(--restack-focus-offset) * -1); }
+.restack-navitem:disabled { opacity: 0.45; cursor: not-allowed; }
+.restack-navitem--active {
+  background: var(--restack-color-primary-surface);
+  border-color: var(--restack-color-primary-subtle);
+  color: var(--restack-color-primary-strong);
+  font-weight: var(--restack-font-weight-medium);
+}
+.restack-navitem__icon { display: inline-flex; flex: none; font-size: 1.05em; }
+.restack-navitem__text { display: flex; flex-direction: column; gap: 0.1rem; flex: 1 1 auto; min-width: 0; }
+.restack-navitem__description {
+  font-size: var(--restack-font-size-micro);
+  font-weight: var(--restack-font-weight-regular);
+  color: var(--restack-color-text-muted);
+}
+.restack-navitem__trailing {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  font-family: var(--restack-font-family-mono);
+  font-size: var(--restack-font-size-micro);
+  color: var(--restack-color-text-subtle);
+}
+.restack-navitem__dot {
+  flex: none;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: var(--restack-radius-pill);
+  background: var(--restack-color-primary-strong);
+}

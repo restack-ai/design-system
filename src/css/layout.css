@@ -1,0 +1,216 @@
+/* Layout — Container, Stack, Grid, Surface, Divider */
+
+.restack-container {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: var(--restack-space-6);
+  font-family: var(--restack-font-family-sans);
+}
+.restack-container--narrow { max-width: 48rem; } /* rdma-fabric-lab's reading measure */
+.restack-container--default { max-width: var(--restack-container-max); }
+.restack-container--wide { max-width: 120rem; } /* the labs' 1920px workspace cap */
+.restack-container--full { max-width: none; }
+.restack-container--flush { padding-inline: 0; }
+@media (max-width: 720px) {
+  .restack-container { padding-inline: var(--restack-space-4); }
+  .restack-container--flush { padding-inline: 0; }
+}
+
+/* --- Stack --- */
+.restack-stack {
+  display: flex;
+  font-family: var(--restack-font-family-sans);
+  min-width: 0;
+}
+.restack-stack--vertical { flex-direction: column; }
+.restack-stack--horizontal { flex-direction: row; }
+.restack-stack--wrap { flex-wrap: wrap; }
+
+.restack-stack--gap-none { gap: var(--restack-space-0); }
+.restack-stack--gap-xs { gap: var(--restack-space-1); }
+.restack-stack--gap-sm { gap: var(--restack-space-2); }
+.restack-stack--gap-md { gap: var(--restack-space-4); }
+.restack-stack--gap-lg { gap: var(--restack-space-6); }
+.restack-stack--gap-xl { gap: var(--restack-space-10); }
+
+.restack-stack--align-start { align-items: flex-start; }
+.restack-stack--align-center { align-items: center; }
+.restack-stack--align-end { align-items: flex-end; }
+.restack-stack--align-stretch { align-items: stretch; }
+.restack-stack--align-baseline { align-items: baseline; }
+
+.restack-stack--justify-start { justify-content: flex-start; }
+.restack-stack--justify-center { justify-content: center; }
+.restack-stack--justify-end { justify-content: flex-end; }
+.restack-stack--justify-between { justify-content: space-between; }
+.restack-stack--justify-around { justify-content: space-around; }
+
+/* --- Grid --- */
+.restack-grid {
+  display: grid;
+  font-family: var(--restack-font-family-sans);
+  min-width: 0;
+}
+.restack-grid--cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+.restack-grid--cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.restack-grid--cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.restack-grid--cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.restack-grid--cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.restack-grid--cols-6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.restack-grid--cols-12 { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+
+.restack-grid--gap-none { gap: var(--restack-space-0); }
+.restack-grid--gap-xs { gap: var(--restack-space-1); }
+.restack-grid--gap-sm { gap: var(--restack-space-2); }
+.restack-grid--gap-md { gap: var(--restack-space-3); } /* the labs' 12px grid gap */
+.restack-grid--gap-lg { gap: var(--restack-space-6); }
+.restack-grid--gap-xl { gap: var(--restack-space-10); }
+
+/* 720px is the labs' mobile break: below it, columns stack in reading order. */
+@media (max-width: 720px) {
+  .restack-grid--responsive { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* --- Surface --- */
+.restack-surface {
+  font-family: var(--restack-font-family-sans);
+  color: var(--restack-color-text);
+  border-radius: var(--restack-radius-lg);
+}
+.restack-surface--default { background: var(--restack-color-surface); }
+.restack-surface--sunken { background: var(--restack-color-surface-sunken); }
+.restack-surface--muted { background: var(--restack-color-surface-raised); }
+.restack-surface--brand-subtle { background: var(--restack-color-primary-surface); }
+
+/* The two filled tones re-point the text family for everything inside them,
+ * so a default Heading or Text placed on lime, or on the opposite face, stays
+ * legible without the caller restating a tone on each child. A custom
+ * property declared here resolves against this element, and descendants
+ * inherit the finished value. */
+.restack-surface--brand {
+  background: var(--restack-color-primary);
+  color: var(--restack-color-on-primary);
+  --restack-color-text: var(--restack-color-on-primary);
+  --restack-color-text-strong: var(--restack-color-on-primary);
+  --restack-color-text-secondary: var(--restack-color-on-primary);
+  --restack-color-text-muted: var(--restack-color-on-primary);
+  --restack-color-text-subtle: var(--restack-color-on-primary);
+  --restack-color-text-link: var(--restack-color-on-primary);
+  --restack-color-primary-strong: var(--restack-color-on-primary);
+  --restack-color-border: color-mix(in srgb, var(--restack-color-on-primary) 25%, transparent);
+}
+.restack-surface--inverse {
+  background: var(--restack-color-surface-inverse);
+  color: var(--restack-color-text-inverse);
+  --restack-color-text: var(--restack-color-text-inverse);
+  --restack-color-text-strong: var(--restack-color-text-inverse);
+  --restack-color-text-secondary: var(--restack-color-text-inverse-secondary);
+  --restack-color-text-muted: var(--restack-color-text-inverse-secondary);
+  --restack-color-text-subtle: var(--restack-color-text-inverse-secondary);
+  --restack-color-border: color-mix(in srgb, var(--restack-color-text-inverse) 22%, transparent);
+}
+
+/* signature — the banner: the page's own ground with the indigo glow over it.
+ * A brand moment (a hero, a splash, an empty first-run), not a container for
+ * controls: text sits on it, and at most one primary action. */
+.restack-surface--signature {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: var(--restack-color-canvas);
+  background-image: var(--restack-gradient-signature);
+}
+/* Two pieces of the banner, behind the content and never interactive: a field
+ * of fine vertical rules fading out from the leading edge, and one large
+ * rounded outline rising from the trailing corner. */
+.restack-surface--signature::before,
+.restack-surface--signature::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+.restack-surface--signature::before {
+  inset: 0 auto 0 0;
+  width: min(38%, 26rem);
+  background-image: var(--restack-pattern-signature);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 4%, #000 34%, transparent 62%), linear-gradient(to right, #000 30%, transparent);
+  mask-image: linear-gradient(to bottom, transparent 4%, #000 34%, transparent 62%), linear-gradient(to right, #000 30%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+.restack-surface--signature::after {
+  right: -6%;
+  bottom: -55%;
+  width: min(46%, 34rem);
+  aspect-ratio: 1.5;
+  border: var(--restack-border-width) solid color-mix(in srgb, var(--restack-color-signature-strong) 40%, transparent);
+  border-radius: 22% / 33%;
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent 55%);
+  mask-image: linear-gradient(to bottom, #000, transparent 55%);
+}
+.restack-surface--signature.restack-surface--bordered {
+  border-color: color-mix(in srgb, var(--restack-color-signature-strong) 35%, var(--restack-color-border));
+}
+
+.restack-surface--pad-none { padding: 0; }
+.restack-surface--pad-sm { padding: var(--restack-space-3); }
+.restack-surface--pad-md { padding: var(--restack-space-4); }
+.restack-surface--pad-lg { padding: var(--restack-space-6); }
+
+.restack-surface--bordered { border: var(--restack-border-width) solid var(--restack-color-border); }
+.restack-surface--brand-subtle.restack-surface--bordered { border-color: var(--restack-color-primary-subtle); }
+.restack-surface--elev-none { box-shadow: var(--restack-shadow-none); }
+.restack-surface--elev-sm { box-shadow: var(--restack-shadow-sm); }
+.restack-surface--elev-md { box-shadow: var(--restack-shadow-md); }
+.restack-surface--elev-lg { box-shadow: var(--restack-shadow-lg); }
+
+/* --- Divider --- */
+.restack-divider {
+  font-family: var(--restack-font-family-sans);
+  border: 0;
+}
+.restack-divider--horizontal {
+  width: 100%;
+  border-top: var(--restack-border-width) solid var(--restack-color-border-subtle);
+}
+.restack-divider--vertical {
+  align-self: stretch;
+  min-height: 1em;
+  border-left: var(--restack-border-width) solid var(--restack-color-border-subtle);
+}
+.restack-divider--default.restack-divider--horizontal { border-top-color: var(--restack-color-border); }
+.restack-divider--default.restack-divider--vertical { border-left-color: var(--restack-color-border); }
+.restack-divider--strong.restack-divider--horizontal { border-top-color: var(--restack-color-border-strong); }
+.restack-divider--strong.restack-divider--vertical { border-left-color: var(--restack-color-border-strong); }
+.restack-divider--brand.restack-divider--horizontal {
+  border-top-width: var(--restack-rule-width);
+  border-top-color: var(--restack-color-primary-strong);
+}
+.restack-divider--brand.restack-divider--vertical {
+  border-left-width: var(--restack-rule-width);
+  border-left-color: var(--restack-color-primary-strong);
+}
+
+.restack-divider--space-none { margin-block: 0; }
+.restack-divider--space-sm { margin-block: var(--restack-space-2); }
+.restack-divider--space-md { margin-block: var(--restack-space-4); }
+.restack-divider--space-lg { margin-block: var(--restack-space-8); }
+
+.restack-divider--labelled {
+  display: flex;
+  align-items: center;
+  border-top: 0;
+}
+.restack-divider--labelled::before,
+.restack-divider--labelled::after {
+  content: '';
+  flex: 1 1 auto;
+  border-top: var(--restack-border-width) solid var(--restack-color-border-subtle);
+}
+.restack-divider__label {
+  padding-inline: var(--restack-space-3);
+  font-size: var(--restack-font-size-caption);
+  color: var(--restack-color-text-muted);
+  white-space: nowrap;
+}

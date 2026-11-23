@@ -1,0 +1,167 @@
+/* Actions — Button, IconButton, Link */
+
+.restack-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--restack-space-2);
+  font-family: var(--restack-font-family-sans);
+  font-weight: var(--restack-font-weight-semibold);
+  line-height: 1;
+  border: var(--restack-border-width) solid transparent;
+  border-radius: var(--restack-radius-md);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color var(--restack-duration-fast) var(--restack-easing-standard),
+    border-color var(--restack-duration-fast) var(--restack-easing-standard),
+    color var(--restack-duration-fast) var(--restack-easing-standard);
+}
+.restack-button:focus-visible {
+  outline: var(--restack-focus-outline);
+  outline-offset: var(--restack-focus-offset);
+}
+/* Disabled: the control stays where it is and fades. The labs fade to 0.35;
+ * at that level a label on charcoal drops to about 2:1 and stops being
+ * readable, so the system holds at 0.45 — still plainly off, still legible. */
+.restack-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+.restack-button--full { width: 100%; }
+.restack-button__icon {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+}
+.restack-button__icon svg { width: 1.15em; height: 1.15em; }
+
+.restack-button--sm { height: var(--restack-size-control-sm); padding-inline: var(--restack-space-3); font-size: var(--restack-font-size-caption); }
+.restack-button--md { height: var(--restack-size-control-md); padding-inline: var(--restack-space-4); font-size: var(--restack-font-size-small); }
+.restack-button--lg { height: var(--restack-size-control-lg); padding-inline: var(--restack-space-5); font-size: var(--restack-font-size-body); }
+
+/* primary — the one lime fill on a screen. Dark ink on it, in both faces. */
+.restack-button--primary {
+  background: var(--restack-color-primary);
+  color: var(--restack-color-on-primary);
+  /* On charcoal the edge is the fill. On paper lime alone is 1.43:1 against
+   * the page, so the edge drops to olive and gives the button a boundary. */
+  border-color: var(--restack-color-primary-edge);
+}
+.restack-button--primary:hover:not(:disabled) { background: var(--restack-color-primary-hover); }
+.restack-button--primary:active:not(:disabled) { background: var(--restack-color-primary-active); }
+
+/* secondary — the labs' utility button: a raised charcoal fill and a control
+ * edge. It is neutral on purpose; lime is reserved for the primary action. */
+.restack-button--secondary {
+  background: var(--restack-color-surface-raised);
+  color: var(--restack-color-text);
+  border-color: var(--restack-color-border-strong);
+}
+.restack-button--secondary:hover:not(:disabled) {
+  background: var(--restack-color-surface-hover);
+  color: var(--restack-color-text-strong);
+}
+
+/* tertiary — the selected-item look: a lime-tinted ground and lime text. */
+.restack-button--tertiary {
+  background: var(--restack-color-primary-surface);
+  color: var(--restack-color-primary-strong);
+  border-color: var(--restack-color-primary-subtle);
+}
+.restack-button--tertiary:hover:not(:disabled) {
+  border-color: var(--restack-color-primary-strong);
+}
+
+.restack-button--ghost {
+  background: transparent;
+  color: var(--restack-color-text-secondary);
+  border-color: transparent;
+}
+.restack-button--ghost:hover:not(:disabled) {
+  background: var(--restack-color-surface-hover);
+  color: var(--restack-color-text-strong);
+}
+
+.restack-button--danger {
+  /* The fill step, not -strong: on paper -strong is a brick red that outweighs
+   * everything beside it, and the fill already holds white text at 5.21:1. */
+  background: var(--restack-color-danger);
+  color: var(--restack-color-on-status);
+  border-color: var(--restack-color-danger);
+}
+.restack-button--danger:hover:not(:disabled) { filter: brightness(1.08); }
+
+.restack-button__spinner {
+  width: 0.9em;
+  height: 0.9em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: var(--restack-radius-pill);
+  animation: restack-spin 0.7s linear infinite;
+}
+
+/* --- IconButton --- */
+/* IconButton borrows the .restack-button--<variant> skins above, so this rule
+ * must not restate border-color: it is declared later in the file and a
+ * `border` shorthand here would reset every variant's edge to transparent.
+ * Width and style only; the transparent default is re-supplied at zero
+ * specificity below. */
+.restack-iconbutton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-width: var(--restack-border-width);
+  border-style: solid;
+  border-radius: var(--restack-radius-md);
+  cursor: pointer;
+  font-family: var(--restack-font-family-sans);
+  transition:
+    background-color var(--restack-duration-fast) var(--restack-easing-standard),
+    color var(--restack-duration-fast) var(--restack-easing-standard);
+}
+:where(.restack-iconbutton) { border-color: transparent; }
+.restack-iconbutton:focus-visible { outline: var(--restack-focus-outline); outline-offset: var(--restack-focus-offset); }
+.restack-iconbutton:disabled { cursor: not-allowed; opacity: 0.45; }
+.restack-iconbutton--round { border-radius: var(--restack-radius-pill); }
+/* The icon is sized in em, so each size carries the matching font-size from
+ * the Button ramp — otherwise the glyph stays put while the box grows. */
+.restack-iconbutton--sm { width: var(--restack-size-control-sm); height: var(--restack-size-control-sm); font-size: var(--restack-font-size-caption); }
+.restack-iconbutton--md { width: var(--restack-size-control-md); height: var(--restack-size-control-md); font-size: var(--restack-font-size-small); }
+.restack-iconbutton--lg { width: var(--restack-size-control-lg); height: var(--restack-size-control-lg); font-size: var(--restack-font-size-body); }
+.restack-iconbutton__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  width: 1.2em;
+  height: 1.2em;
+}
+.restack-iconbutton__icon svg { width: 100%; height: 100%; }
+
+/* --- Link --- */
+.restack-link {
+  font-family: var(--restack-font-family-sans);
+  color: var(--restack-color-text-link);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+.restack-link:focus-visible {
+  outline: var(--restack-focus-outline);
+  outline-offset: var(--restack-focus-offset);
+  border-radius: var(--restack-radius-xs);
+}
+.restack-link--inverse { color: var(--restack-color-text-inverse); }
+.restack-link--muted { color: var(--restack-color-text-secondary); }
+.restack-link--muted:hover { color: var(--restack-color-text-strong); }
+.restack-link--underline-always { text-decoration-line: underline; }
+.restack-link--underline-none { text-decoration-line: none; }
+.restack-link--underline-hover { text-decoration-line: none; }
+.restack-link--underline-hover:hover { text-decoration-line: underline; }
+.restack-link__external { width: 0.75em; height: 0.75em; flex: none; }

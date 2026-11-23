@@ -1,0 +1,446 @@
+/* Forms — Field, Input, Textarea, Select, Checkbox, Radio, Switch
+ *
+ * Every control sits on the sunken ground with the control edge (border-strong,
+ * 3:1 or better against both the panel and the page), so a field reads as a
+ * recess in a panel rather than a box drawn on it. Focus turns the edge lime
+ * and thickens it to two pixels. */
+
+.restack-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--restack-space-2);
+  font-family: var(--restack-font-family-sans);
+  color: var(--restack-color-text);
+}
+.restack-field--inline {
+  flex-direction: row;
+  align-items: baseline;
+  gap: var(--restack-space-4);
+}
+.restack-field--inline .restack-field__label {
+  flex: none;
+  width: 11rem;
+  padding-top: 0.4rem;
+}
+.restack-field--inline .restack-field__control { flex: 1 1 auto; }
+
+.restack-field__label {
+  font-size: var(--restack-font-size-small);
+  font-weight: var(--restack-font-weight-medium);
+  line-height: var(--restack-line-height-snug);
+  color: var(--restack-color-text);
+}
+.restack-field__required {
+  color: var(--restack-color-danger-strong);
+  margin-left: 0.2em;
+}
+.restack-field__control {
+  display: flex;
+  flex-direction: column;
+  gap: var(--restack-space-1);
+}
+/* Hints carry ranges and units ("2–16 GPUs · one rank each"), so they speak
+ * in the muted voice and keep figures tabular. */
+.restack-field__hint {
+  font-size: var(--restack-font-size-caption);
+  color: var(--restack-color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.restack-field__error {
+  font-size: var(--restack-font-size-caption);
+  font-weight: var(--restack-font-weight-medium);
+  color: var(--restack-color-danger-strong);
+}
+
+/* --- Input --- */
+.restack-input {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--restack-space-2);
+  background: var(--restack-color-surface-sunken);
+  border: var(--restack-border-width) solid var(--restack-color-border-strong);
+  border-radius: var(--restack-radius-md);
+  font-family: var(--restack-font-family-sans);
+  color: var(--restack-color-text);
+  caret-color: var(--restack-color-primary-strong);
+  transition:
+    border-color var(--restack-duration-fast) var(--restack-easing-standard),
+    box-shadow var(--restack-duration-fast) var(--restack-easing-standard);
+}
+.restack-input--full { display: flex; width: 100%; }
+.restack-input:hover:not(.restack-input--disabled) { border-color: var(--restack-color-text-subtle); }
+.restack-input:focus-within,
+.restack-input:focus-within:hover {
+  border-color: var(--restack-color-border-focus);
+  box-shadow: var(--restack-focus-ring);
+}
+.restack-input--invalid,
+.restack-input--invalid:hover { border-color: var(--restack-color-danger-strong); }
+.restack-input--invalid:focus-within {
+  border-color: var(--restack-color-danger-strong);
+  box-shadow: 0 0 0 1px var(--restack-color-danger-strong);
+}
+.restack-input--disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.restack-input--sm { height: var(--restack-size-control-sm); padding-inline: var(--restack-space-2); font-size: var(--restack-font-size-caption); }
+.restack-input--md { height: var(--restack-size-control-md); padding-inline: var(--restack-space-3); font-size: var(--restack-font-size-small); }
+.restack-input--lg { height: var(--restack-size-control-lg); padding-inline: var(--restack-space-4); font-size: var(--restack-font-size-body); }
+
+.restack-input__control {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  padding: 0;
+  font-variant-numeric: tabular-nums;
+}
+.restack-input__control::placeholder { color: var(--restack-color-text-subtle); }
+.restack-input__control:disabled { cursor: not-allowed; }
+/* A unit or prefix — "MiB", "GB/s" — is technical truth, so it is mono. */
+.restack-input__affix {
+  flex: none;
+  color: var(--restack-color-text-muted);
+  font-family: var(--restack-font-family-mono);
+  font-size: 0.9em;
+  line-height: 0;
+  display: inline-flex;
+  align-items: center;
+}
+.restack-input__affix svg { width: 1.1em; height: 1.1em; }
+
+/* --- Textarea --- */
+.restack-textarea {
+  display: block;
+  width: 100%;
+  padding: var(--restack-space-2) var(--restack-space-3);
+  background: var(--restack-color-surface-sunken);
+  border: var(--restack-border-width) solid var(--restack-color-border-strong);
+  border-radius: var(--restack-radius-md);
+  font-family: var(--restack-font-family-sans);
+  font-size: var(--restack-font-size-small);
+  line-height: var(--restack-line-height-normal);
+  color: var(--restack-color-text);
+  caret-color: var(--restack-color-primary-strong);
+  transition:
+    border-color var(--restack-duration-fast) var(--restack-easing-standard),
+    box-shadow var(--restack-duration-fast) var(--restack-easing-standard);
+}
+.restack-textarea::placeholder { color: var(--restack-color-text-subtle); }
+.restack-textarea:hover:not(:disabled) { border-color: var(--restack-color-text-subtle); }
+.restack-textarea:focus,
+.restack-textarea:focus:hover {
+  outline: none;
+  border-color: var(--restack-color-border-focus);
+  box-shadow: var(--restack-focus-ring);
+}
+.restack-textarea:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.restack-textarea--invalid,
+.restack-textarea--invalid:hover { border-color: var(--restack-color-danger-strong); }
+.restack-textarea--invalid:focus {
+  border-color: var(--restack-color-danger-strong);
+  box-shadow: 0 0 0 1px var(--restack-color-danger-strong);
+}
+.restack-textarea--resize-none { resize: none; }
+.restack-textarea--resize-vertical { resize: vertical; }
+.restack-textarea--resize-both { resize: both; }
+
+/* --- Select --- */
+.restack-select {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  background: var(--restack-color-surface-sunken);
+  border: var(--restack-border-width) solid var(--restack-color-border-strong);
+  border-radius: var(--restack-radius-md);
+  font-family: var(--restack-font-family-sans);
+  color: var(--restack-color-text);
+  transition:
+    border-color var(--restack-duration-fast) var(--restack-easing-standard),
+    box-shadow var(--restack-duration-fast) var(--restack-easing-standard);
+}
+.restack-select--full { display: flex; width: 100%; }
+.restack-select:hover:not(.restack-select--disabled) { border-color: var(--restack-color-text-subtle); }
+.restack-select:focus-within,
+.restack-select:focus-within:hover {
+  border-color: var(--restack-color-border-focus);
+  box-shadow: var(--restack-focus-ring);
+}
+.restack-select--invalid,
+.restack-select--invalid:hover { border-color: var(--restack-color-danger-strong); }
+.restack-select--disabled { opacity: 0.45; }
+.restack-select--sm { height: var(--restack-size-control-sm); font-size: var(--restack-font-size-caption); }
+.restack-select--md { height: var(--restack-size-control-md); font-size: var(--restack-font-size-small); }
+.restack-select--lg { height: var(--restack-size-control-lg); font-size: var(--restack-font-size-body); }
+
+.restack-select__control {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font: inherit;
+  font-weight: var(--restack-font-weight-medium);
+  color: inherit;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  /* The popup list is drawn by the platform; this keeps it in the current face. */
+  color-scheme: var(--restack-color-scheme);
+  padding-inline: var(--restack-space-3) var(--restack-space-8);
+}
+.restack-select__control option { background: var(--restack-color-surface); color: var(--restack-color-text); }
+.restack-select__control:disabled { cursor: not-allowed; }
+.restack-select--sm .restack-select__control { padding-inline: var(--restack-space-2) var(--restack-space-6); }
+.restack-select__arrow {
+  position: absolute;
+  right: var(--restack-space-3);
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+  color: var(--restack-color-text-secondary);
+}
+.restack-select--sm .restack-select__arrow { right: var(--restack-space-2); width: 12px; height: 12px; }
+
+/* --- Checkbox + Radio (shared choice-control geometry) --- */
+.restack-checkbox,
+.restack-radio {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--restack-space-2);
+  position: relative;
+  font-family: var(--restack-font-family-sans);
+  font-size: var(--restack-font-size-small);
+  line-height: var(--restack-line-height-snug);
+  color: var(--restack-color-text);
+  cursor: pointer;
+}
+.restack-checkbox--disabled,
+.restack-radio--disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.restack-checkbox__input,
+.restack-radio__input {
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  opacity: 0;
+  cursor: inherit;
+}
+
+.restack-checkbox__box,
+.restack-radio__dial {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  margin-top: 0.05rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--restack-color-surface-sunken);
+  border: var(--restack-border-width) solid var(--restack-color-border-strong);
+  transition:
+    background-color var(--restack-duration-fast) var(--restack-easing-standard),
+    border-color var(--restack-duration-fast) var(--restack-easing-standard);
+}
+.restack-checkbox__box { border-radius: var(--restack-radius-sm); color: var(--restack-color-on-primary); }
+.restack-radio__dial { border-radius: var(--restack-radius-pill); }
+
+/* Checked: the lime fill with dark ink, edged in the legible lime — on the
+ * dark face the two are one colour; on paper the olive edge is what keeps a
+ * pale lime box visible (1.43:1 alone, 4.99:1 with the edge). */
+.restack-checkbox__box svg { width: 100%; height: 100%; opacity: 0; }
+.restack-checkbox__input:checked ~ .restack-checkbox__box,
+.restack-checkbox__box--mixed {
+  background: var(--restack-color-primary);
+  border-color: var(--restack-color-primary-strong);
+}
+.restack-checkbox__input:checked ~ .restack-checkbox__box svg,
+.restack-checkbox__box--mixed svg { opacity: 1; }
+
+.restack-radio__input:checked ~ .restack-radio__dial {
+  border-color: var(--restack-color-primary-strong);
+  border-width: 5px;
+}
+
+.restack-checkbox__input:focus-visible ~ .restack-checkbox__box,
+.restack-radio__input:focus-visible ~ .restack-radio__dial {
+  outline: var(--restack-focus-outline);
+  outline-offset: var(--restack-focus-offset);
+}
+.restack-checkbox--invalid .restack-checkbox__box,
+.restack-radio--invalid .restack-radio__dial {
+  border-color: var(--restack-color-danger-strong);
+}
+
+.restack-checkbox__text,
+.restack-radio__text,
+.restack-switch__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.restack-checkbox__description,
+.restack-radio__description,
+.restack-switch__description {
+  font-size: var(--restack-font-size-caption);
+  color: var(--restack-color-text-muted);
+}
+
+/* --- Switch --- */
+.restack-switch {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--restack-space-3);
+  position: relative;
+  font-family: var(--restack-font-family-sans);
+  font-size: var(--restack-font-size-small);
+  line-height: var(--restack-line-height-snug);
+  color: var(--restack-color-text);
+  cursor: pointer;
+}
+.restack-switch--disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.restack-switch__input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: inherit;
+}
+/* Off: the control edge as a track (3:1+ in both faces) carrying a light knob
+ * (4.39:1 against the track on the dark face, 3.61:1 on the light one).
+ * On: the legible lime, carrying a knob in its own ink.
+ * The thumb's side is the signal; the colour confirms it. */
+.restack-switch__track {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px;
+  background: var(--restack-color-border-strong);
+  border-radius: var(--restack-radius-pill);
+  transition: background-color var(--restack-duration-fast) var(--restack-easing-standard);
+}
+.restack-switch__thumb {
+  display: block;
+  background: var(--restack-color-control-knob);
+  border-radius: var(--restack-radius-pill);
+  box-shadow: var(--restack-shadow-sm);
+  transition:
+    transform var(--restack-duration-fast) var(--restack-easing-standard),
+    background-color var(--restack-duration-fast) var(--restack-easing-standard);
+}
+.restack-switch--md .restack-switch__track { width: 2.25rem; height: 1.25rem; margin-top: 0.05rem; }
+.restack-switch--md .restack-switch__thumb { width: 1rem; height: 1rem; }
+.restack-switch--md .restack-switch__input:checked ~ .restack-switch__track .restack-switch__thumb {
+  transform: translateX(1rem);
+}
+.restack-switch--sm .restack-switch__track { width: 1.75rem; height: 1rem; margin-top: 0.15rem; }
+.restack-switch--sm .restack-switch__thumb { width: 0.75rem; height: 0.75rem; }
+.restack-switch--sm .restack-switch__input:checked ~ .restack-switch__track .restack-switch__thumb {
+  transform: translateX(0.75rem);
+}
+.restack-switch__input:checked ~ .restack-switch__track {
+  background: var(--restack-color-primary-strong);
+}
+.restack-switch__input:checked ~ .restack-switch__track .restack-switch__thumb {
+  background: var(--restack-color-on-primary-strong);
+}
+.restack-switch__input:focus-visible ~ .restack-switch__track {
+  outline: var(--restack-focus-outline);
+  outline-offset: var(--restack-focus-offset);
+}
+
+/* --- Slider ---
+ * The scrubber. The native range input carries the behaviour; the track is
+ * painted in two parts from --restack-slider-fill, which the component sets
+ * from the value. */
+.restack-slider {
+  display: flex;
+  flex-direction: column;
+  gap: var(--restack-space-1);
+  min-width: 0;
+  font-family: var(--restack-font-family-sans);
+  color: var(--restack-color-text);
+}
+.restack-slider--disabled { opacity: 0.45; }
+.restack-slider__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--restack-space-3);
+  font-size: var(--restack-font-size-caption);
+}
+.restack-slider__label { font-weight: var(--restack-font-weight-medium); }
+.restack-slider__value {
+  font-family: var(--restack-font-family-mono);
+  color: var(--restack-color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.restack-slider__input {
+  --restack-slider-thumb: 0.875rem;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: var(--restack-slider-thumb);
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.restack-slider--sm .restack-slider__input { --restack-slider-thumb: 0.75rem; }
+.restack-slider__input:disabled { cursor: not-allowed; }
+.restack-slider__input::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: var(--restack-radius-pill);
+  background: linear-gradient(
+    to right,
+    var(--restack-color-primary-strong) var(--restack-slider-fill, 0%),
+    var(--restack-color-surface-hover) var(--restack-slider-fill, 0%)
+  );
+}
+.restack-slider__input::-moz-range-track {
+  height: 4px;
+  border-radius: var(--restack-radius-pill);
+  background: var(--restack-color-surface-hover);
+}
+.restack-slider__input::-moz-range-progress {
+  height: 4px;
+  border-radius: var(--restack-radius-pill);
+  background: var(--restack-color-primary-strong);
+}
+.restack-slider__input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: var(--restack-slider-thumb);
+  height: var(--restack-slider-thumb);
+  margin-top: calc((4px - var(--restack-slider-thumb)) / 2);
+  border: var(--restack-border-width-thick) solid var(--restack-color-canvas);
+  border-radius: var(--restack-radius-pill);
+  background: var(--restack-color-primary-strong);
+}
+.restack-slider__input::-moz-range-thumb {
+  width: var(--restack-slider-thumb);
+  height: var(--restack-slider-thumb);
+  box-sizing: border-box;
+  border: var(--restack-border-width-thick) solid var(--restack-color-canvas);
+  border-radius: var(--restack-radius-pill);
+  background: var(--restack-color-primary-strong);
+}
+.restack-slider__input:focus-visible {
+  outline: var(--restack-focus-outline);
+  outline-offset: var(--restack-focus-offset);
+  border-radius: var(--restack-radius-pill);
+}

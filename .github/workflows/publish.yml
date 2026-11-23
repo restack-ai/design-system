@@ -1,0 +1,59 @@
+# Publishes the library to the GitHub Packages npm registry, which serves it at
+# https://npm.pkg.github.com/@restack-ai/design-system.
+#
+# The registry keys packages by repository owner, so the package scope must stay
+# @restack-ai to match restack-ai/design-system. Renaming the scope without
+# moving the repository would make every publish 403.
+#
+# Releases are cut by pushing a version tag, so the published version is a
+# recorded git object rather than whatever happened to sit in package.json when
+# a workflow ran.
+name: Publish
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          # Writes an .npmrc that points the scope at GitHub Packages and reads
+          # credentials from NODE_AUTH_TOKEN. No token is ever committed.
+          registry-url: https://npm.pkg.github.com
+          scope: '@restack-ai'
+
+      - run: npm ci
+
+      # A tag that disagrees with package.json publishes a version nobody can
+      # find from the history. Fail loudly instead.
+      - name: Check tag matches package version
+        if: github.ref_type == 'tag'
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          pkg="$(node -p "require('./package.json').version")"
+          if [ "$tag" != "$pkg" ]; then
+            echo "::error::tag v$tag does not match package.json version $pkg"
+            exit 1
+          fi
+
+      # `prepublishOnly` runs typecheck and build, so publish cannot ship a
+      # stale or type-broken dist.
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

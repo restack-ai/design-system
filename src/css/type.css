@@ -1,0 +1,99 @@
+/* Typography — Heading, Text, SectionLabel */
+
+.restack-heading {
+  font-family: var(--restack-font-family-sans);
+  font-weight: var(--restack-font-weight-semibold);
+  line-height: var(--restack-line-height-tight);
+  letter-spacing: var(--restack-letter-spacing-snug);
+  color: var(--restack-color-text-strong);
+  text-wrap: balance;
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: var(--restack-space-3);
+}
+.restack-heading__marker { align-self: center; }
+.restack-heading__text { min-width: 0; }
+.restack-heading__suffix {
+  font-weight: var(--restack-font-weight-regular);
+  font-size: 0.72em;
+  color: var(--restack-color-text-secondary);
+  letter-spacing: var(--restack-letter-spacing-normal);
+}
+
+/* The two large steps track in; the labs set their page titles at about
+ * -0.035em, which reads as precise rather than squeezed only at these sizes. */
+.restack-heading--1 { font-size: var(--restack-font-size-display); letter-spacing: var(--restack-letter-spacing-tight); }
+.restack-heading--2 { font-size: var(--restack-font-size-title); letter-spacing: var(--restack-letter-spacing-tight); }
+.restack-heading--3 { font-size: var(--restack-font-size-heading); }
+.restack-heading--4 { font-size: var(--restack-font-size-subheading); }
+.restack-heading--5 { font-size: var(--restack-font-size-lead); }
+
+.restack-heading--default { color: var(--restack-color-text-strong); }
+.restack-heading--brand { color: var(--restack-color-primary-strong); }
+.restack-heading--accent { color: var(--restack-color-accent-strong); }
+.restack-heading--inverse { color: var(--restack-color-text-inverse); }
+.restack-heading--muted { color: var(--restack-color-text-secondary); }
+.restack-heading--inverse .restack-heading__suffix { color: var(--restack-color-text-inverse-secondary); }
+
+/* --- Text --- */
+.restack-text {
+  font-family: var(--restack-font-family-sans);
+  margin: 0;
+  line-height: var(--restack-line-height-normal);
+  color: var(--restack-color-text);
+}
+.restack-text--lead { font-size: var(--restack-font-size-lead); line-height: var(--restack-line-height-normal); }
+.restack-text--body { font-size: var(--restack-font-size-body); }
+.restack-text--small { font-size: var(--restack-font-size-small); }
+.restack-text--caption { font-size: var(--restack-font-size-caption); line-height: var(--restack-line-height-snug); }
+.restack-text--micro { font-size: var(--restack-font-size-micro); line-height: var(--restack-line-height-snug); }
+
+.restack-text--default { color: var(--restack-color-text); }
+.restack-text--secondary { color: var(--restack-color-text-secondary); }
+.restack-text--muted { color: var(--restack-color-text-muted); }
+.restack-text--brand { color: var(--restack-color-primary-strong); }
+.restack-text--inverse { color: var(--restack-color-text-inverse); }
+.restack-text--success { color: var(--restack-color-success-strong); }
+.restack-text--warning { color: var(--restack-color-warning-strong); }
+.restack-text--danger { color: var(--restack-color-danger-strong); }
+
+.restack-text--bold { font-weight: var(--restack-font-weight-semibold); }
+.restack-text--numeric { font-variant-numeric: tabular-nums; }
+.restack-text--mono { font-family: var(--restack-font-family-mono); }
+
+/* --- SectionLabel --- */
+.restack-sectionlabel {
+  display: flex;
+  align-items: center;
+  gap: var(--restack-space-2);
+  line-height: var(--restack-line-height-snug);
+}
+/* sans — the everyday label: sentence case, semibold, quiet. Most labels. */
+.restack-sectionlabel--sans {
+  font-family: var(--restack-font-family-sans);
+  font-size: var(--restack-font-size-small);
+  font-weight: var(--restack-font-weight-semibold);
+  color: var(--restack-color-text-strong);
+}
+/* mono — the eyebrow: uppercase, tracked out. One per page section, no more;
+ * used everywhere it makes a screen read like a terminal. */
+.restack-sectionlabel--mono {
+  font-family: var(--restack-font-family-mono);
+  font-size: var(--restack-font-size-micro);
+  font-weight: var(--restack-font-weight-medium);
+  letter-spacing: var(--restack-letter-spacing-caps);
+  text-transform: uppercase;
+  color: var(--restack-color-text-secondary);
+}
+.restack-sectionlabel__dot { font-size: var(--restack-font-size-caption); }
+.restack-sectionlabel__text { min-width: 0; }
+.restack-sectionlabel__meta {
+  margin-left: auto;
+  font-family: var(--restack-font-family-mono);
+  font-weight: var(--restack-font-weight-regular);
+  letter-spacing: var(--restack-letter-spacing-normal);
+  text-transform: none;
+  font-variant-numeric: tabular-nums;
+  color: var(--restack-color-text-subtle);
+}

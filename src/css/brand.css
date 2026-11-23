@@ -1,0 +1,211 @@
+/* Brand — Dot, Wordmark, BrandLogo, BrandHeader */
+
+/* --- Dot --- */
+.restack-dot {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  line-height: 1;
+}
+.restack-dot--labelled {
+  gap: 0.6em;
+  font-family: var(--restack-font-family-sans);
+  font-size: var(--restack-font-size-caption);
+  line-height: var(--restack-line-height-snug);
+}
+.restack-dot__label { color: var(--restack-color-text-secondary); }
+
+.restack-dot__mark {
+  display: block;
+  flex: none;
+  border-radius: var(--restack-radius-pill);
+  background: currentColor;
+}
+.restack-dot__mark--xs { width: 0.34em; height: 0.34em; }
+.restack-dot__mark--sm { width: 0.45em; height: 0.45em; }
+.restack-dot__mark--md { width: 0.6em; height: 0.6em; }
+.restack-dot__mark--live { animation: restack-pulse var(--restack-duration-ambient) var(--restack-easing-standard) infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .restack-dot__mark--live { animation: none; }
+}
+
+/* The dot is a graphic that carries state, so each tone takes the legible
+ * (-strong) step — on the light face the plain fill would vanish into paper. */
+.restack-dot--primary { color: var(--restack-color-primary-strong); }
+.restack-dot--accent { color: var(--restack-color-accent-strong); }
+.restack-dot--success { color: var(--restack-color-success-strong); }
+.restack-dot--warning { color: var(--restack-color-warning-strong); }
+.restack-dot--danger { color: var(--restack-color-danger-strong); }
+.restack-dot--neutral { color: var(--restack-color-border-strong); }
+.restack-dot--muted { color: var(--restack-color-text-subtle); }
+
+/* --- Wordmark --- */
+.restack-wordmark {
+  display: inline-flex;
+  align-items: flex-start;
+  font-family: var(--restack-font-family-sans);
+  font-weight: var(--restack-font-weight-semibold);
+  letter-spacing: var(--restack-letter-spacing-snug);
+  line-height: var(--restack-line-height-tight);
+  color: var(--restack-color-text-strong);
+  white-space: nowrap;
+}
+.restack-wordmark__accent { color: var(--restack-color-primary-strong); }
+/* Raised to the cap line and tucked against the last letter, as the labs set it. */
+.restack-wordmark__dot {
+  flex: none;
+  width: 0.24em;
+  height: 0.24em;
+  margin-left: 0.08em;
+  margin-top: 0.06em;
+  border-radius: var(--restack-radius-pill);
+  background: var(--restack-color-primary-strong);
+}
+.restack-wordmark--sm { font-size: var(--restack-font-size-body); }
+.restack-wordmark--md { font-size: var(--restack-font-size-subheading); }
+.restack-wordmark--lg { font-size: var(--restack-font-size-title); letter-spacing: var(--restack-letter-spacing-tight); }
+.restack-wordmark--xl { font-size: var(--restack-font-size-display); letter-spacing: var(--restack-letter-spacing-tight); }
+
+/* --- BrandLogo ---
+ * The shipped artwork is single-colour PNG whose shape lives entirely in its
+ * alpha channel, so it is applied as a mask over `currentColor` rather than
+ * as an <img>: one asset renders off-white on charcoal, charcoal on paper and
+ * lime anywhere, which an <img> could only do with a file per colour.
+ * A caller-supplied `src` stays an <img>: it arrives with its own colours. */
+.restack-brandlogo {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--restack-space-1);
+  font-family: var(--restack-font-family-sans);
+  line-height: var(--restack-line-height-tight);
+}
+.restack-brandlogo__lockup {
+  display: flex;
+  align-items: center;
+  gap: var(--restack-space-3);
+}
+.restack-brandlogo__img { display: block; width: auto; }
+.restack-brandlogo__art {
+  display: block;
+  flex: none;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-image: var(--restack-brandlogo-art);
+  mask-image: var(--restack-brandlogo-art);
+}
+
+/* Artwork intrinsics: the aspect ratios are the pixel sizes of the two assets,
+ * so height alone sizes them and no layout shift is possible. Each asset is
+ * named once and read twice — vite inlines every url() it sees, so writing it
+ * into both mask properties would embed the payload twice. */
+.restack-brandlogo--lockup .restack-brandlogo__art {
+  aspect-ratio: 1151 / 232;
+  --restack-brandlogo-art: url('../assets/restack-lockup.png');
+}
+.restack-brandlogo--mark .restack-brandlogo__art {
+  aspect-ratio: 188 / 232;
+  --restack-brandlogo-art: url('../assets/restack-mark.png');
+}
+
+/* A product name beside the signature is divided from it by a hairline. */
+.restack-brandlogo__wordmark {
+  font-weight: var(--restack-font-weight-semibold);
+  letter-spacing: var(--restack-letter-spacing-snug);
+  white-space: nowrap;
+  padding-left: var(--restack-space-3);
+  border-left: var(--restack-border-width) solid var(--restack-color-border);
+  color: var(--restack-color-text-strong);
+}
+.restack-brandlogo__tagline {
+  font-family: var(--restack-font-family-mono);
+  font-weight: var(--restack-font-weight-regular);
+  color: var(--restack-color-text-muted);
+  letter-spacing: var(--restack-letter-spacing-normal);
+}
+
+/* Heights are of the whole artwork, sprout included: the letters' x-height
+ * is a little under half of it, so sm reads like 9px lowercase beside a
+ * 16px wordmark — the right weight for a 56px bar. */
+.restack-brandlogo--sm .restack-brandlogo__wordmark { font-size: var(--restack-font-size-body); }
+.restack-brandlogo--sm .restack-brandlogo__art,
+.restack-brandlogo--sm .restack-brandlogo__img { height: 22px; }
+.restack-brandlogo--sm .restack-brandlogo__tagline { font-size: var(--restack-font-size-micro); }
+
+.restack-brandlogo--md .restack-brandlogo__wordmark { font-size: var(--restack-font-size-subheading); }
+.restack-brandlogo--md .restack-brandlogo__art,
+.restack-brandlogo--md .restack-brandlogo__img { height: 32px; }
+.restack-brandlogo--md .restack-brandlogo__tagline { font-size: var(--restack-font-size-caption); }
+
+.restack-brandlogo--lg .restack-brandlogo__wordmark { font-size: var(--restack-font-size-title); }
+.restack-brandlogo--lg .restack-brandlogo__art,
+.restack-brandlogo--lg .restack-brandlogo__img { height: 48px; }
+.restack-brandlogo--lg .restack-brandlogo__tagline { font-size: var(--restack-font-size-small); }
+
+.restack-brandlogo--default { color: var(--restack-color-text-strong); }
+.restack-brandlogo--primary { color: var(--restack-color-primary-strong); }
+.restack-brandlogo--signature { color: var(--restack-color-signature-strong); }
+.restack-brandlogo--mono { color: inherit; }
+
+/* --- BrandHeader --- */
+.restack-brandheader {
+  display: flex;
+  align-items: center;
+  gap: var(--restack-space-6);
+  min-height: 3.5rem;
+  padding: var(--restack-space-2) var(--restack-space-6);
+  background: var(--restack-color-canvas);
+  border-bottom: var(--restack-border-width) solid var(--restack-color-border-subtle);
+  font-family: var(--restack-font-family-sans);
+  color: var(--restack-color-text);
+}
+.restack-brandheader--sunken { background: var(--restack-color-surface-sunken); }
+.restack-brandheader--sticky {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: color-mix(in srgb, var(--restack-color-canvas) 88%, transparent);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+.restack-brandheader--sticky.restack-brandheader--sunken {
+  background: color-mix(in srgb, var(--restack-color-surface-sunken) 88%, transparent);
+}
+.restack-brandheader__lead {
+  display: flex;
+  align-items: center;
+  gap: var(--restack-space-3);
+  flex: none;
+  min-width: 0;
+}
+.restack-brandheader__title {
+  font-size: var(--restack-font-size-small);
+  font-weight: var(--restack-font-weight-medium);
+  color: var(--restack-color-text-secondary);
+  padding-left: var(--restack-space-3);
+  border-left: var(--restack-border-width) solid var(--restack-color-border);
+  white-space: nowrap;
+}
+.restack-brandheader__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--restack-space-5);
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: var(--restack-font-size-small);
+}
+.restack-brandheader__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--restack-space-3);
+  margin-left: auto;
+  flex: none;
+  font-size: var(--restack-font-size-small);
+}
+/* Tabs in the nav slot lose their own baseline rule: the bar's hairline is it. */
+.restack-brandheader__nav .restack-tabs--underline .restack-tabs__list { border-bottom-color: transparent; }

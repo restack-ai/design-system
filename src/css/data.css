@@ -1,0 +1,552 @@
+/* Data display — Card, StatCard, Badge, Tag, Table, DescriptionList, List, NotePanel, ProgressBar */
+
+/* --- Card ---
+ * The labs' workspace panel: one tone up from the page, a fine stroke, clipped
+ * 7px corners. Depth is the tone step; there is no resting shadow. */
+.restack-card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: var(--restack-color-surface);
+  border: var(--restack-border-width) solid var(--restack-color-border);
+  border-radius: var(--restack-radius-lg);
+  font-family: var(--restack-font-family-sans);
+  color: var(--restack-color-text);
+  overflow: hidden;
+}
+.restack-card--sunken { background: var(--restack-color-surface-sunken); }
+/* brand is the selected panel: lime-tinted ground, lime edge, and the faint
+ * lime halo the labs put around a selected rank. */
+.restack-card--brand {
+  background: var(--restack-color-primary-surface);
+  border-color: var(--restack-color-primary-subtle);
+  box-shadow: var(--restack-shadow-selected);
+}
+.restack-card--inverse {
+  background: var(--restack-color-surface-inverse);
+  border-color: var(--restack-color-surface-inverse);
+  color: var(--restack-color-text-inverse);
+  --restack-color-text: var(--restack-color-text-inverse);
+  --restack-color-text-strong: var(--restack-color-text-inverse);
+  --restack-color-text-secondary: var(--restack-color-text-inverse-secondary);
+  --restack-color-text-muted: var(--restack-color-text-inverse-secondary);
+  --restack-color-border-subtle: color-mix(in srgb, var(--restack-color-text-inverse) 18%, transparent);
+}
+.restack-card--elevation-sm { box-shadow: var(--restack-shadow-sm); }
+.restack-card--elevation-md { box-shadow: var(--restack-shadow-md); }
+/* accent: the 2px lime selection rule, run down the leading edge. */
+.restack-card--accent { box-shadow: inset var(--restack-rule-width) 0 0 var(--restack-color-primary-strong); }
+
+.restack-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--restack-space-3);
+  padding: var(--restack-space-3) var(--restack-space-4);
+  border-bottom: var(--restack-border-width) solid var(--restack-color-border-subtle);
+}
+.restack-card__headings { display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; }
+.restack-card__title {
+  font-size: var(--restack-font-size-small);
+  font-weight: var(--restack-font-weight-semibold);
+  line-height: var(--restack-line-height-snug);
+  color: var(--restack-color-text-strong);
+}
+.restack-card__subtitle {
+  font-size: var(--restack-font-size-caption);
+  color: var(--restack-color-text-muted);
+}
+.restack-card__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--restack-space-2);
+  margin-left: auto;
+  flex: none;
+  font-size: var(--restack-font-size-caption);
+  color: var(--restack-color-text-muted);
+}
+.restack-card__body--none { padding: 0; }
+.restack-card__body--sm { padding: var(--restack-space-3) var(--restack-space-4); }
+.restack-card__body--md { padding: var(--restack-space-4); }
+.restack-card__body--lg { padding: var(--restack-space-6); }
+.restack-card__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--restack-space-3);
+  padding: var(--restack-space-2) var(--restack-space-4);
+  border-top: var(--restack-border-width) solid var(--restack-color-border-subtle);
+  background: var(--restack-color-surface-sunken);
+  font-size: var(--restack-font-size-caption);
+  color: var(--restack-color-text-muted);
+}
+.restack-card--inverse .restack-card__footer { background: transparent; }
+
+/* --- StatCard ---
+ * Set the way rdma-fabric-lab sets its run figures: a sans label, a large mono
+ * figure with its unit in small mono beside it, and a mono caption that says
+ * where the number came from. */
+.restack-statcard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--restack-space-2);
+  /* a stat card is normally one track of a Grid; without this its content's
+   * min-content width wins over 1fr and the whole row is pushed wide. */
+  min-width: 0;
+  padding: var(--restack-space-4);
+  background: var(--restack-color-surface);
+  border: var(--restack-border-width) solid var(--restack-color-border);
+  border-radius: var(--restack-radius-lg);
+  font-family: var(--restack-font-family-sans);
+  color: var(--restack-color-text);
+}
+.restack-statcard--brand {
+  background: var(--restack-color-primary-surface);
+  border-color: var(--restack-color-primary-subtle);
+}
+.restack-statcard--inverse {
+  background: var(--restack-color-surface-inverse);
+  border-color: var(--restack-color-surface-inverse);
+  color: var(--restack-color-text-inverse);
+  --restack-color-text: var(--restack-color-text-inverse);
+  --restack-color-text-strong: var(--restack-color-text-inverse);
+  --restack-color-text-secondary: var(--restack-color-text-inverse-secondary);
+  --restack-color-text-muted: var(--restack-color-text-inverse-secondary);
+}
+.restack-statcard--compact {
+  flex-direction: row;
+  align-items: baseline;
+  gap: var(--restack-space-3);
+  /* one line is the intent, not a guarantee: a track too narrow for label +
+   * figure folds them onto two rows rather than painting over a neighbour. */
+  flex-wrap: wrap;
+}
+.restack-statcard__label {
+  font-size: var(--restack-font-size-caption);
+  font-weight: var(--restack-font-weight-medium);
+  color: var(--restack-color-text-secondary);
+}
+.restack-statcard__figure {
+  display: flex;
+  align-items: baseline;
+  gap: var(--restack-space-2);
+  flex-wrap: wrap;
+  min-width: 0;
+}
+/* The only break the figure may take is before the delta. A figure and its
+ * unit are one quantity — splitting them changes what the card says — so they
+ * travel in one nowrap box. A long value overflows rather than breaks; an
+ * overflow is visible where a wrong number is not. */
+.restack-statcard__quantity {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4em;
+  white-space: nowrap;
+}
+.restack-statcard__value {
+  font-family: var(--restack-font-family-mono);
+  font-size: var(--restack-font-size-title);
+  font-weight: var(--restack-font-weight-medium);
+  line-height: var(--restack-line-height-tight);
+  letter-spacing: var(--restack-letter-spacing-snug);
+  font-variant-numeric: tabular-nums;
+  color: var(--restack-color-text-strong);
+}
+.restack-statcard__unit {
+  font-family: var(--restack-font-family-mono);
+  font-size: var(--restack-font-size-small);
+  color: var(--restack-color-text-muted);
+}
+.restack-statcard__delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  font-family: var(--restack-font-family-mono);
+  font-size: var(--restack-font-size-caption);
+  font-weight: var(--restack-font-weight-medium);
+  font-variant-numeric: tabular-nums;
+  color: var(--restack-color-text-secondary);
+}
+.restack-statcard__delta svg { width: 0.75em; height: 0.75em; }
+.restack-statcard__delta--up { color: var(--restack-color-success-strong); }
+.restack-statcard__delta--down { color: var(--restack-color-danger-strong); }
+.restack-statcard__delta--flat { color: var(--restack-color-text-muted); }
+.restack-statcard__caption {
+  font-family: var(--restack-font-family-mono);
+  font-size: var(--restack-font-size-micro);
+  color: var(--restack-color-text-muted);
+}
+
+/* --- Badge ---
+ * Compact, square-cornered and quiet — subordinate to whatever it labels. */
+.restack-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-family: var(--restack-font-family-sans);
+  font-weight: var(--restack-font-weight-medium);
+  line-height: 1;
+  border: var(--restack-border-width) solid transparent;
+  border-radius: var(--restack-radius-sm);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.restack-badge--sm { font-size: var(--restack-font-size-micro); padding: 0.2rem 0.4rem; }
+.restack-badge--md { font-size: var(--restack-font-size-caption); padding: 0.25rem 0.5rem; }
+.restack-badge__dot {
+  width: 0.45em;
+  height: 0.45em;
+  border-radius: var(--restack-radius-pill);
+  background: currentColor;
+  flex: none;
+}
+
+/* solid — the -strong step as ground, on-status ink on it. */
+.restack-badge--solid.restack-badge--neutral { background: var(--restack-color-border-strong); color: var(--restack-color-text-strong); }
+.restack-badge--solid.restack-badge--brand { background: var(--restack-color-primary); color: var(--restack-color-on-primary); }
+.restack-badge--solid.restack-badge--info { background: var(--restack-color-info-strong); color: var(--restack-color-on-status); }
+.restack-badge--solid.restack-badge--success { background: var(--restack-color-success-strong); color: var(--restack-color-on-status); }
+.restack-badge--solid.restack-badge--warning { background: var(--restack-color-warning-strong); color: var(--restack-color-on-status); }
+.restack-badge--solid.restack-badge--danger { background: var(--restack-color-danger-strong); color: var(--restack-color-on-status); }
+
+/* subtle — the tinted ground with the legible step as text and a faint edge. */
+.restack-badge--subtle.restack-badge--neutral { background: var(--restack-color-surface-raised); border-color: var(--restack-color-border); color: var(--restack-color-text-secondary); }
+.restack-badge--subtle.restack-badge--brand { background: var(--restack-color-primary-surface); border-color: var(--restack-color-primary-subtle); color: var(--restack-color-primary-strong); }
+.restack-badge--subtle.restack-badge--info { background: var(--restack-color-info-surface); color: var(--restack-color-info-strong); }
+/* Success shares lime with selection, so the two are told apart by shape:
+ * a selection is boxed (tinted ground + edge, as brand above); a passing
+ * state is never boxed — a dot and the word, nothing around them. */
+.restack-badge--subtle.restack-badge--success {
+  background: transparent;
+  padding-inline: 0;
+  color: var(--restack-color-success-strong);
+}
+.restack-badge--subtle.restack-badge--success:not(:has(.restack-badge__dot))::before {
+  content: '';
+  width: 0.45em;
+  height: 0.45em;
+  border-radius: var(--restack-radius-pill);
+  background: currentColor;
+  flex: none;
+}
+.restack-badge--subtle.restack-badge--warning { background: var(--restack-color-warning-surface); color: var(--restack-color-warning-strong); }
+.restack-badge--subtle.restack-badge--danger { background: var(--restack-color-danger-surface); color: var(--restack-color-danger-strong); }
+
+/* outline — the labs' run tag: an edge, tracked-out uppercase, nothing else. */
+.restack-badge--outline {
+  background: transparent;
+  text-transform: uppercase;
+  letter-spacing: var(--restack-letter-spacing-caps);
+  font-weight: var(--restack-font-weight-semibold);
+}
+.restack-badge--outline.restack-badge--md { font-size: var(--restack-font-size-micro); padding: 0.3rem 0.45rem; }
+.restack-badge--outline.restack-badge--sm { font-size: var(--restack-font-size-micro); padding: 0.2rem 0.35rem; }
+.restack-badge--outline.restack-badge--neutral { border-color: var(--restack-color-border-strong); color: var(--restack-color-text-secondary); }
+.restack-badge--outline.restack-badge--brand { border-color: var(--restack-color-primary-subtle); color: var(--restack-color-primary-strong); }
+.restack-badge--outline.restack-badge--info { border-color: var(--restack-color-info-strong); color: var(--restack-color-info-strong); }
+.restack-badge--outline.restack-badge--success { border-color: var(--restack-color-success-strong); color: var(--restack-color-success-strong); }
+.restack-badge--outline.restack-badge--warning { border-color: var(--restack-color-warning-strong); color: var(--restack-color-warning-strong); }
+.restack-badge--outline.restack-badge--danger { border-color: var(--restack-color-danger-strong); color: var(--restack-color-danger-strong); }
+
+/* --- Tag ---
+ * An identifier chip — a rank, a tensor, a file — so it is set in mono. */
+.restack-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-family: var(--restack-font-family-mono);
+  line-height: 1;
+  border: var(--restack-border-width) solid var(--restack-color-border);
+  border-radius: var(--restack-radius-sm);
+  background: var(--restack-color-surface-raised);
+  color: var(--restack-color-text-secondary);
+  max-width: 100%;
+}
+.restack-tag--brand {
+  background: var(--restack-color-primary-surface);
+  border-color: var(--restack-color-primary-subtle);
+  color: var(--restack-color-primary-strong);
+}
+.restack-tag--sm { font-size: var(--restack-font-size-micro); padding: 0.2rem 0.35rem; }
+.restack-tag--md { font-size: var(--restack-font-size-caption); padding: 0.3rem 0.5rem; }
+.restack-tag__label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.restack-tag__remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  height: 1em;
+  padding: 0;
+  flex: none;
+  border: 0;
+  background: transparent;
+  color: var(--restack-color-text-muted);
+  cursor: pointer;
+  border-radius: var(--restack-radius-xs);
+}
+.restack-tag__remove:hover { color: var(--restack-color-text-strong); }
+.restack-tag__remove:focus-visible { outline: var(--restack-focus-outline); outline-offset: 1px; }
+.restack-tag__remove svg { width: 100%; height: 100%; }
+
+/* --- Table ---
+ * A quiet header — the sunken tone, muted medium labels — and hairline rows.
+ * The data is the loud part. */
+.restack-table {
+  display: flex;
+  flex-direction: column;
+  gap: var(--restack-space-2);
+  font-family: var(--restack-font-family-sans);
+  color: var(--restack-color-text);
+}
+.restack-table__caption {
+  font-size: var(--restack-font-size-small);
+  font-weight: var(--restack-font-weight-semibold);
+  color: var(--restack-color-text-strong);
+}
+.restack-table__scroll {
+  overflow-x: auto;
+  border: var(--restack-border-width) solid var(--restack-color-border);
+  border-radius: var(--restack-radius-lg);
+  background: var(--restack-color-surface);
+}
+.restack-table__el {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--restack-font-size-small);
+}
+.restack-table__head {
+  background: var(--restack-color-surface-sunken);
+  color: var(--restack-color-text-muted);
+}
+.restack-table__el--sticky .restack-table__head th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.restack-table__th {
+  font-size: var(--restack-font-size-caption);
+  font-weight: var(--restack-font-weight-medium);
+  white-space: nowrap;
+  border-bottom: var(--restack-border-width) solid var(--restack-color-border);
+  background: var(--restack-color-surface-sunken);
+}
+.restack-table__td {
+  border-bottom: var(--restack-border-width) solid var(--restack-color-border-subtle);
+  vertical-align: top;
+}
+.restack-table__el--md .restack-table__th,
+.restack-table__el--md .restack-table__td { padding: var(--restack-space-3) var(--restack-space-4); }
+.restack-table__el--md .restack-table__th { padding-block: var(--restack-space-2); }
+.restack-table__el--compact .restack-table__th,
+.restack-table__el--compact .restack-table__td {
+  padding: var(--restack-space-2) var(--restack-space-3);
+  font-size: var(--restack-font-size-caption);
+}
+.restack-table__el tbody tr:last-child .restack-table__td { border-bottom: 0; }
+.restack-table__el--striped tbody tr:nth-child(even) { background: var(--restack-color-surface-sunken); }
+.restack-table__el--hoverable tbody tr:hover { background: var(--restack-color-surface-hover); }
+.restack-table__cell--left { text-align: left; }
+.restack-table__cell--center { text-align: center; }
+.restack-table__cell--right { text-align: right; }
+/* A numeric column is technical truth: mono, tabular. */
+.restack-table__td.restack-table__cell--numeric {
+  font-family: var(--restack-font-family-mono);
+  font-size: 0.94em;
+  font-variant-numeric: tabular-nums;
+}
+.restack-table__th.restack-table__cell--numeric { font-variant-numeric: tabular-nums; }
+.restack-table__empty {
+  padding: var(--restack-space-8);
+  text-align: center;
+  color: var(--restack-color-text-muted);
+}
+
+/* --- DescriptionList ---
+ * The labs' inspector rows: label left in the muted voice, value right. */
+.restack-dl {
+  margin: 0;
+  font-family: var(--restack-font-family-sans);
+  font-size: var(--restack-font-size-small);
+  color: var(--restack-color-text);
+}
+.restack-dl__row {
+  display: flex;
+  gap: var(--restack-space-4);
+  padding: var(--restack-space-2) 0;
+}
+.restack-dl--rows .restack-dl__row { flex-direction: column; gap: 0.15rem; }
+.restack-dl--dividers .restack-dl__row {
+  border-bottom: var(--restack-border-width) solid var(--restack-color-border-subtle);
+}
+.restack-dl--dividers .restack-dl__row:last-child { border-bottom: 0; }
+.restack-dl__term {
+  font-weight: var(--restack-font-weight-regular);
+  color: var(--restack-color-text-muted);
+}
+.restack-dl--columns .restack-dl__term {
+  flex: none;
+  width: var(--restack-dl-term-width, 12rem);
+}
+.restack-dl__description { margin: 0; min-width: 0; }
+
+/* --- List --- */
+.restack-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--restack-font-family-sans);
+  color: var(--restack-color-text);
+  line-height: var(--restack-line-height-normal);
+}
+.restack-list--number { list-style: decimal; padding-left: 1.4em; }
+.restack-list--number .restack-list__item { display: list-item; }
+.restack-list--number .restack-list__item::marker {
+  font-family: var(--restack-font-family-mono);
+  font-size: 0.86em;
+  color: var(--restack-color-text-muted);
+}
+.restack-list--body { font-size: var(--restack-font-size-body); }
+.restack-list--small { font-size: var(--restack-font-size-small); }
+.restack-list__item { display: flex; gap: var(--restack-space-2); }
+.restack-list--tight > .restack-list__item + .restack-list__item { margin-top: var(--restack-space-1); }
+.restack-list--md > .restack-list__item + .restack-list__item { margin-top: var(--restack-space-2); }
+.restack-list--loose > .restack-list__item + .restack-list__item { margin-top: var(--restack-space-4); }
+.restack-list__marker {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0.9em;
+  height: calc(var(--restack-line-height-normal) * 1em);
+  color: var(--restack-color-text-subtle);
+}
+.restack-list__dot {
+  width: 0.36em;
+  height: 0.36em;
+  border-radius: var(--restack-radius-pill);
+  background: var(--restack-color-primary-strong);
+}
+.restack-list--arrow .restack-list__marker { color: var(--restack-color-primary-strong); }
+.restack-list__text { min-width: 0; }
+.restack-list--none .restack-list__item { gap: 0; }
+
+/* --- NotePanel ---
+ * An aside held off the main column by a rule, not a box. */
+.restack-notepanel {
+  font-family: var(--restack-font-family-sans);
+  color: var(--restack-color-text-secondary);
+  line-height: var(--restack-line-height-normal);
+}
+.restack-notepanel--small { font-size: var(--restack-font-size-small); }
+.restack-notepanel--caption { font-size: var(--restack-font-size-caption); }
+.restack-notepanel--rule-left {
+  border-left: var(--restack-rule-width) solid var(--restack-color-primary-strong);
+  padding: var(--restack-space-1) 0 var(--restack-space-1) var(--restack-space-4);
+}
+.restack-notepanel--rule-top {
+  border-top: var(--restack-border-width) solid var(--restack-color-primary-strong);
+  padding-top: var(--restack-space-2);
+}
+.restack-notepanel--neutral { border-color: var(--restack-color-border-strong); }
+.restack-notepanel--muted {
+  border-color: var(--restack-color-border);
+  color: var(--restack-color-text-muted);
+}
+.restack-notepanel__title {
+  font-weight: var(--restack-font-weight-semibold);
+  color: var(--restack-color-text-strong);
+  margin-bottom: 0.15rem;
+}
+
+/* --- ProgressBar --- */
+.restack-progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--restack-space-1);
+  font-family: var(--restack-font-family-sans);
+  color: var(--restack-color-text);
+}
+.restack-progress__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--restack-space-3);
+  font-size: var(--restack-font-size-caption);
+}
+.restack-progress__label { font-weight: var(--restack-font-weight-medium); }
+.restack-progress__value {
+  font-family: var(--restack-font-family-mono);
+  color: var(--restack-color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.restack-progress__track {
+  width: 100%;
+  background: var(--restack-color-surface-hover);
+  border-radius: var(--restack-radius-pill);
+  overflow: hidden;
+}
+.restack-progress--sm .restack-progress__track { height: 4px; }
+.restack-progress--md .restack-progress__track { height: 6px; }
+.restack-progress--lg .restack-progress__track { height: 10px; }
+.restack-progress__fill {
+  height: 100%;
+  border-radius: inherit;
+  transition: width var(--restack-duration-normal) var(--restack-easing-standard);
+}
+.restack-progress__fill--brand { background: var(--restack-color-primary-strong); }
+.restack-progress__fill--success { background: var(--restack-color-success); }
+.restack-progress__fill--warning { background: var(--restack-color-warning); }
+.restack-progress__fill--danger { background: var(--restack-color-danger); }
+
+/* --- Kbd --- */
+.restack-kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.6em;
+  padding: 0.15em 0.4em;
+  border: var(--restack-border-width) solid var(--restack-color-border);
+  border-bottom-width: var(--restack-border-width-thick);
+  border-radius: var(--restack-radius-sm);
+  background: var(--restack-color-surface-raised);
+  color: var(--restack-color-text-secondary);
+  font-family: var(--restack-font-family-mono);
+  font-size: 0.82em;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+/* --- CodeBlock --- */
+.restack-codeblock {
+  border: var(--restack-border-width) solid var(--restack-color-border);
+  border-radius: var(--restack-radius-lg);
+  background: var(--restack-color-surface-sunken);
+  color: var(--restack-color-text);
+  overflow: hidden;
+  min-width: 0;
+}
+.restack-codeblock__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--restack-space-3);
+  padding: var(--restack-space-2) var(--restack-space-4);
+  border-bottom: var(--restack-border-width) solid var(--restack-color-border-subtle);
+  font-family: var(--restack-font-family-mono);
+  font-size: var(--restack-font-size-micro);
+  color: var(--restack-color-text-muted);
+}
+.restack-codeblock__title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.restack-codeblock__actions { display: inline-flex; align-items: center; gap: var(--restack-space-2); flex: none; }
+.restack-codeblock__pre {
+  margin: 0;
+  padding: var(--restack-space-4);
+  overflow-x: auto;
+  font-family: var(--restack-font-family-mono);
+  font-size: var(--restack-font-size-caption);
+  line-height: var(--restack-line-height-relaxed);
+  tab-size: 2;
+}
+.restack-codeblock__pre:focus-visible { outline: var(--restack-focus-outline); outline-offset: calc(var(--restack-focus-offset) * -1); }
+.restack-codeblock__pre code { font: inherit; }
+.restack-codeblock--wrap .restack-codeblock__pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+.restack-codeblock__pre b { font-weight: var(--restack-font-weight-regular); color: var(--restack-color-primary-strong); }
+.restack-codeblock__pre i { font-style: normal; color: var(--restack-color-text-subtle); }
