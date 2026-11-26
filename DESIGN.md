@@ -617,7 +617,7 @@ its children; `tone="signature"` is the banner's indigo glow.
 
 ### Actions
 - **Button** — `primary` is the one lime fill per view; `secondary` is the labs' neutral utility button
-  (raised fill, control edge); `tertiary` is the selected-item look; `ghost`; `danger`. Disabled fades to 35%.
+  (raised fill, control edge); `tertiary` is the selected-item look; `ghost`; `danger`. Disabled fades to 45%.
 - **IconButton** — same skins, `label` required. **Link** — lime, underline offset 0.2em.
 
 ### Forms
