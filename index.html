@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" data-restack-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/design-system/assets/favicon-D92NfhB0.svg" />
+    <title>restack ai — Design System</title>
+    <meta
+      name="description"
+      content="The charcoal-and-lime console language of the restack labs in code: two faces of tokens, 49 React components and the reasoning behind the numbers."
+    />
+    <meta name="color-scheme" content="dark light" />
+    <script>
+      /* Apply the stored face before first paint, so a light-face visitor never
+       * sees the dark page flash. Storage may be unavailable; dark is the default. */
+      try {
+        if (localStorage.getItem('restack-ds-theme') === 'light') {
+          document.documentElement.dataset.restackTheme = 'light';
+        }
+      } catch (e) {}
+    </script>
+    <script type="module" crossorigin src="/design-system/assets/index-DElovfKj.js"></script>
+    <link rel="stylesheet" crossorigin href="/design-system/assets/index-Crzw4j11.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
