@@ -52,6 +52,7 @@ colors:
   viz-5: "#d8cf89"
   viz-6: "#d89dbd"
   viz-7: "#94aaa8"
+  viz-other: "#626a80"
 
 colorsLight:
   # light face (data-restack-theme="light")
@@ -91,7 +92,7 @@ colorsLight:
 
 typography:
   display:
-    fontFamily: "'DM Sans', ui-sans-serif, system-ui, 'Pretendard Variable', Pretendard, 'Noto Sans KR', sans-serif"
+    fontFamily: "'DM Sans', 'Pretendard Variable', Pretendard, ui-sans-serif, system-ui, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif"
     fontSize: 34px
     fontWeight: 600
     lineHeight: 1.15
@@ -427,6 +428,15 @@ rose and sage. Orchid sits about 57° from the signature indigo, so a data serie
 a brand surface. Take them in sequence.
 The light face carries darker counterparts of each.
 
+**Lime is also the selection.** `viz-1` is the brand lime, and a selected node, row or event is lime
+too. Where a view lets the reader select or highlight a mark, start categorical series at `viz-2` and
+keep `viz-1` for a series whose meaning is "go" — a reduce phase, a passing run — so the selection is
+never one lime among many.
+
+**`viz-other`** is the neutral for an "Other" bucket and for anything past the last series: the
+control-edge grey of each face (3.6:1 on the dark canvas, 3.7:1 on paper). On charcoal it sits well
+below every series in lightness; on paper it is closer to sage, so an Other mark always keeps its label.
+
 **The labelled-colour rule.** A hue alone never explains whether a tensor is owned, an operation is
 running or a series is a category. Keep labels, legends and ownership text beside colour.
 
@@ -446,6 +456,9 @@ the escape hatch for everything else.
 The sans stack carries Korean fallbacks after DM Sans (`Pretendard Variable`, `Pretendard`,
 `Apple SD Gothic Neo`, `Noto Sans KR`). DM Sans has no Hangul, so the browser takes each glyph from the
 first face that has it: Latin stays DM Sans, Hangul lands on a Korean sans instead of a serif default.
+Pretendard comes straight after DM Sans, ahead of `system-ui`: on Windows and Linux `system-ui` already
+resolves Hangul (Malgun Gothic, Noto Sans CJK), so a Korean face listed after it is never reached. The
+system does not ship Pretendard; a Hangul-heavy host loads it, and the stack picks it up.
 
 ### Hierarchy
 
@@ -559,8 +572,8 @@ The labs' diagrams are the content, so they follow the same rules as the chrome 
   label: cyan for compute, lime for communication, amber for waiting. The selected event gets a full
   `primary-strong` edge; unrelated events dim rather than disappear.
 - **Lanes** carry a faint dotted plotting texture (`border-subtle`, 8px) so empty time reads as time.
-- **Series** take `viz-1…7` in order, are always labelled directly or in a legend, and never rely on
-  hue alone. Axes and gridlines are `border-subtle`; tick labels are mono `micro` in `text-muted`.
+- **Series** take `viz-1…7` in order (from `viz-2` where marks can be selected), put any remainder in
+  `viz-other`, are always labelled directly or in a legend, and never rely on hue alone. Axes and gridlines are `border-subtle`; tick labels are mono `micro` in `text-muted`.
 - **Figures** beside a diagram say what they are: modeled time is labelled modeled.
 - A wide timeline scrolls inside a focusable region on small screens; it is not squeezed.
 
@@ -614,7 +627,7 @@ its children; `tone="signature"` is the banner's indigo glow.
 
 ### Actions
 - **Button** — `primary` is the one lime fill per view; `secondary` is the labs' neutral utility button
-  (raised fill, control edge); `tertiary` is the selected-item look; `ghost`; `danger`. Disabled fades to 35%.
+  (raised fill, control edge); `tertiary` is the selected-item look; `ghost`; `danger`. Disabled fades to 45%.
 - **IconButton** — same skins, `label` required. **Link** — lime, underline offset 0.2em.
 
 ### Forms

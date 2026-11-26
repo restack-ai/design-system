@@ -227,6 +227,10 @@
   --restack-color-viz-5: var(--restack-color-yellow-300);
   --restack-color-viz-6: var(--restack-color-pink-300);
   --restack-color-viz-7: var(--restack-color-sage-300);
+  /* The neutral for an "Other" bucket or anything past the last series. It is
+   * the control-edge grey: 3.60:1 on the canvas, 3.32:1 on a panel, and well
+   * below every series in lightness, so the remainder recedes but stays seen. */
+  --restack-color-viz-other: var(--restack-color-gray-500);
 
   /* Elevation lives here, not in space.css, because a shadow that reads on
    * charcoal is a smudge on paper. The dark face barely uses it: the sticky
@@ -307,6 +311,9 @@
   --restack-color-viz-5: var(--restack-color-yellow-600);
   --restack-color-viz-6: var(--restack-color-pink-600);
   --restack-color-viz-7: var(--restack-color-sage-600);
+  /* 3.68:1 on the canvas, 3.84:1 on white. On paper it sits closer to sage
+   * than on charcoal, so an Other mark always keeps its label. */
+  --restack-color-viz-other: var(--restack-color-gray-450);
 
   --restack-shadow-sm: 0 1px 2px rgba(18, 20, 22, 0.08);
   --restack-shadow-md: 0 4px 12px rgba(18, 20, 22, 0.1);

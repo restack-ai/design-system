@@ -14,11 +14,15 @@
  * the browser takes each glyph from the first face that has it, so mixed
  * Korean/English copy keeps DM Sans for Latin and lands on Pretendard (or the
  * platform's Korean sans) for Hangul instead of a serif default.
+ *
+ * Pretendard sits before system-ui on purpose. On Windows and Linux system-ui
+ * resolves Hangul itself (Malgun Gothic, Noto Sans CJK), so a Korean face
+ * listed after it is never reached.
  */
 
 :root {
-  --restack-font-family-sans: 'DM Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
-    'Pretendard Variable', Pretendard, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  --restack-font-family-sans: 'DM Sans', 'Pretendard Variable', Pretendard, ui-sans-serif,
+    system-ui, -apple-system, 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
   --restack-font-family-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas,
     monospace;
 

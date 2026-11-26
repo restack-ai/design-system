@@ -191,7 +191,7 @@ All tokens are CSS custom properties prefixed `--restack-`, defined in `styles.c
 | Family | Names |
 | --- | --- |
 | **Space** | `space-0\|1\|2\|3\|4\|5\|6\|8\|10\|12\|16` — a 4px grid |
-| **Colour** | `color-primary` (+`-hover\|-active\|-strong\|-subtle\|-surface`), `color-primary-edge`, `color-on-primary`, `color-signature` (+`-strong\|-surface`), `color-accent` (+`-strong\|-surface`), `color-canvas`, `color-surface` (+`-sunken\|-raised\|-hover\|-inverse`), `color-text` (+`-strong\|-secondary\|-muted\|-subtle\|-inverse\|-link`), `color-border` (+`-subtle\|-strong\|-focus`), `color-info\|success\|warning\|danger` each with `-strong` and `-surface`, `color-on-status`, `color-viz-1…7` |
+| **Colour** | `color-primary` (+`-hover\|-active\|-strong\|-subtle\|-surface`), `color-primary-edge`, `color-on-primary`, `color-signature` (+`-strong\|-surface`), `color-accent` (+`-strong\|-surface`), `color-canvas`, `color-surface` (+`-sunken\|-raised\|-hover\|-inverse`), `color-text` (+`-strong\|-secondary\|-muted\|-subtle\|-inverse\|-link`), `color-border` (+`-subtle\|-strong\|-focus`), `color-info\|success\|warning\|danger` each with `-strong` and `-surface`, `color-on-status`, `color-viz-1…7`, `color-viz-other` |
 | **Type** | `font-size-display\|title\|heading\|subheading\|lead\|body\|small\|caption\|micro`, `font-family-sans\|mono`, `font-weight-regular\|medium\|semibold\|bold`, `line-height-tight\|snug\|normal\|relaxed`, `letter-spacing-tight\|snug\|normal\|wide\|caps` |
 | **Other** | `radius-xs\|sm\|md\|lg\|xl\|pill`, `shadow-sm\|md\|lg\|selected`, `gradient-signature`, `space-unit`, `duration-fast\|normal\|slow\|ambient`, `easing-standard\|enter`, `border-width`, `rule-width`, `focus-outline`, `focus-offset` |
 
