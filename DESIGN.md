@@ -91,7 +91,7 @@ colorsLight:
 
 typography:
   display:
-    fontFamily: "'DM Sans', ui-sans-serif, system-ui, 'Pretendard Variable', Pretendard, 'Noto Sans KR', sans-serif"
+    fontFamily: "'DM Sans', 'Pretendard Variable', Pretendard, ui-sans-serif, system-ui, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif"
     fontSize: 34px
     fontWeight: 600
     lineHeight: 1.15
@@ -446,6 +446,9 @@ the escape hatch for everything else.
 The sans stack carries Korean fallbacks after DM Sans (`Pretendard Variable`, `Pretendard`,
 `Apple SD Gothic Neo`, `Noto Sans KR`). DM Sans has no Hangul, so the browser takes each glyph from the
 first face that has it: Latin stays DM Sans, Hangul lands on a Korean sans instead of a serif default.
+Pretendard comes straight after DM Sans, ahead of `system-ui`: on Windows and Linux `system-ui` already
+resolves Hangul (Malgun Gothic, Noto Sans CJK), so a Korean face listed after it is never reached. The
+system does not ship Pretendard; a Hangul-heavy host loads it, and the stack picks it up.
 
 ### Hierarchy
 
