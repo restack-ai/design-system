@@ -70,7 +70,7 @@ const STATUS_TOKENS = STATUS.flatMap((s) => [
   `--restack-color-${s}-strong`,
   `--restack-color-${s}-surface`,
 ]);
-const VIZ = [1, 2, 3, 4, 5, 6, 7].map((n) => `--restack-color-viz-${n}`);
+const VIZ = [...[1, 2, 3, 4, 5, 6, 7].map((n) => `--restack-color-viz-${n}`), '--restack-color-viz-other'];
 const ROLE_TOKENS = ROLES.flatMap((r) => r.items.map(([name]) => `--restack-color-${name}`));
 const PASTEL_TOKENS = PASTELS.flatMap((a) => ramp(a.family, a.steps));
 
@@ -245,9 +245,10 @@ export function ColorSection() {
           <Ramp tokens={VIZ} values={values} />
           <Text size="small" tone="secondary">
             Lime and cyan first — the two phase colours (reduce, gather) — then apricot, orchid,
-            straw, rose and sage. Orchid sits well clear of the signature indigo, so a data series
-            is never mistaken for a brand surface. Take them in
-            sequence, and always label a series: a hue alone never explains what it is.
+            straw, rose and sage, and a neutral for Other. Orchid sits well clear of the signature
+            indigo, so a data series is never mistaken for a brand surface. Take them in
+            sequence, starting at cyan where a mark can be selected, because the selection is lime.
+            Always label a series: a hue alone never explains what it is.
           </Text>
         </Stack>
       </Stack>

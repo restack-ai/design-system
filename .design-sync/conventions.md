@@ -87,7 +87,7 @@ Token families, real names, all prefixed `--restack-`:
 - **colour** — `color-primary` (+`-hover|-active|-strong|-subtle|-surface`), `color-on-primary`,
   `color-accent` (+`-strong|-surface`), `color-canvas`, `color-surface` (+`-sunken|-raised|-hover|-inverse`),
   `color-text` (+`-strong|-secondary|-muted|-subtle|-inverse|-link`), `color-border` (+`-subtle|-strong|-focus`),
-  `color-info|success|warning|danger` (+`-strong|-surface`), `color-on-status`, `color-viz-1…7`
+  `color-info|success|warning|danger` (+`-strong|-surface`), `color-on-status`, `color-viz-1…7`, `color-viz-other`
 - **type** — `font-size-display|title|heading|subheading|lead|body|small|caption|micro`,
   `font-family-sans|mono`, `font-weight-regular|medium|semibold|bold`, `line-height-*`, `letter-spacing-*`
 - **other** — `radius-xs|sm|md|lg|xl|pill` (2/3/5/7/9px), `shadow-sm|md|lg|selected`, `focus-outline`, `rule-width`
